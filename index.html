@@ -30,7 +30,6 @@
     min-height: 100vh;
   }
 
-  /* HEADER */
   header {
     background: var(--brown-deep);
     padding: 28px 20px 22px;
@@ -85,7 +84,6 @@
     letter-spacing: 1px;
   }
 
-  /* CART BAR */
   .cart-bar {
     position: sticky;
     top: 0;
@@ -129,7 +127,6 @@
   .order-btn:hover { background: var(--caramel-light); }
   .order-btn .wa-icon { font-size: 15px; }
 
-  /* SECTION LABEL */
   .section-label {
     padding: 24px 18px 10px;
     font-family: 'Playfair Display', serif;
@@ -148,7 +145,6 @@
     opacity: 0.6;
   }
 
-  /* MENU GRID */
   .menu-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -159,7 +155,6 @@
     .menu-grid { grid-template-columns: repeat(3, 1fr); }
   }
 
-  /* ITEM CARD */
   .item-card {
     background: var(--warm-white);
     border-radius: 16px;
@@ -225,7 +220,6 @@
     color: var(--brown-mid);
   }
 
-  /* QTY CONTROLS */
   .qty-controls {
     display: flex;
     align-items: center;
@@ -270,7 +264,6 @@
   }
   .add-btn:hover { background: var(--caramel-light); }
 
-  /* CART SUMMARY PANEL */
   .cart-panel {
     margin: 8px 14px 0;
     background: var(--warm-white);
@@ -310,7 +303,6 @@
     color: var(--brown-deep);
   }
 
-  /* WHATSAPP BUTTON */
   .wa-btn {
     display: block;
     width: 100%;
@@ -334,7 +326,6 @@
   .wa-btn:hover { background: #1ebe5d; }
   .wa-btn:active { transform: scale(0.98); }
 
-  /* NOTE INPUT */
   .note-area {
     width: 100%;
     margin-top: 12px;
@@ -359,7 +350,6 @@
     text-transform: uppercase;
   }
 
-  /* EMPTY CART */
   .empty-note {
     text-align: center;
     padding: 32px 20px 40px;
@@ -369,7 +359,6 @@
   }
   .empty-note span { font-size: 32px; display: block; margin-bottom: 8px; }
 
-  /* FOOTER */
   footer {
     text-align: center;
     padding: 28px 20px;
@@ -379,7 +368,6 @@
     letter-spacing: 1px;
   }
 
-  /* TOAST */
   .toast {
     position: fixed;
     bottom: 24px;
@@ -419,23 +407,18 @@
   </button>
 </div>
 
-<!-- CAKES -->
 <div class="section-label">🎂 Cakes</div>
 <div class="menu-grid" id="grid-cakes"></div>
 
-<!-- COOKIES & BISCUITS -->
 <div class="section-label">🍪 Cookies & Biscuits</div>
 <div class="menu-grid" id="grid-cookies"></div>
 
-<!-- BREADS & BUNS -->
 <div class="section-label">🍞 Breads & Buns</div>
 <div class="menu-grid" id="grid-breads"></div>
 
-<!-- BEVERAGES -->
 <div class="section-label">☕ Beverages</div>
 <div class="menu-grid" id="grid-beverages"></div>
 
-<!-- CART PANEL -->
 <div class="section-label" id="cartSection">🧾 Your Order</div>
 <div class="cart-panel" id="cartPanel">
   <div id="cartItems"></div>
@@ -457,8 +440,8 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  // ── CONFIG ──────────────────────────────────────────────
-  const WHATSAPP_NUMBER = '919133458116'; // ← Replace with owner's number (country code + number)
+  const WHATSAPP_NUMBER = '919133458116';
+  const UPI_ID = 'anushapantula@ybl';
 
   const MENU = {
     cakes: [
@@ -485,9 +468,8 @@
       { id: 'v3', emoji: '🥛', name: 'Cold Coffee', desc: 'With ice cream', price: 90 },
     ],
   };
-  // ─────────────────────────────────────────────────────────
 
-  const cart = {}; // { id: qty }
+  const cart = {};
 
   function getItem(id) {
     for (const cat of Object.values(MENU)) {
@@ -569,7 +551,6 @@
       document.getElementById('cartBarTotal').textContent = '₹' + totalPrice;
     }
 
-    // Render cart rows
     const cartItemsEl = document.getElementById('cartItems');
     if (ids.length > 0) {
       cartItemsEl.innerHTML = `
@@ -607,7 +588,8 @@
     });
     msg += `\n💰 *Total: ₹${totalPrice}*`;
     if (note) msg += `\n\n📝 *Note:* ${note}`;
-    msg += '\n\n_Payment: Will pay via UPI / Cash on delivery_';
+    msg += `\n\n💳 *Pay via UPI:*\nupi://pay?pa=${UPI_ID}&am=${totalPrice}&tn=BakeryOrder`;
+    msg += `\n\n_After payment, please send screenshot here_ 🙏`;
 
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
     window.open(url, '_blank');
