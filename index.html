@@ -441,7 +441,7 @@
 
 <script>
   const WHATSAPP_NUMBER = '919133458116';
-  const UPI_ID = 'anushapantula@ybl';
+  const UPI_ID = 'anushapala@ybl';
 
   const MENU = {
     cakes: [
@@ -580,16 +580,27 @@
     const totalPrice = ids.reduce((s, id) => s + cart[id] * getItem(id).price, 0);
     const note = document.getElementById('noteInput').value.trim();
 
-    let msg = '🧁 *New Order from Sweetheart Bakery*\n\n';
-    msg += '*Items Ordered:*\n';
+    const e = {
+      cake:    '\uD83E\uDDC1',
+      money:   '\uD83D\uDCB0',
+      card:    '\uD83D\uDCB3',
+      note:    '\uD83D\uDCDD',
+      pray:    '\uD83D\uDE4F',
+      bullet:  '\u2022',
+      times:   '\u00D7',
+      rupee:   '\u20B9',
+    };
+
+    let msg = `${e.cake} *New Order from Sweetheart Bakery*\n\n`;
+    msg += `*Items Ordered:*\n`;
     ids.forEach(id => {
       const item = getItem(id);
-      msg += `• ${item.name} × ${cart[id]} = ₹${item.price * cart[id]}\n`;
+      msg += `${e.bullet} ${item.name} ${e.times} ${cart[id]} = ${e.rupee}${item.price * cart[id]}\n`;
     });
-    msg += `\n💰 *Total: ₹${totalPrice}*`;
-    if (note) msg += `\n\n📝 *Note:* ${note}`;
-    msg += `\n\n💳 *Pay via UPI:*\nupi://pay?pa=${UPI_ID}&am=${totalPrice}&tn=BakeryOrder`;
-    msg += `\n\n_After payment, please send screenshot here_ 🙏`;
+    msg += `\n${e.money} *Total: ${e.rupee}${totalPrice}*`;
+    if (note) msg += `\n\n${e.note} *Note:* ${note}`;
+    msg += `\n\n${e.card} *Pay via UPI:*\nupi://pay?pa=${UPI_ID}&am=${totalPrice}&tn=BakeryOrder`;
+    msg += `\n\n_After payment, please send screenshot here ${e.pray}_`;
 
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
     window.open(url, '_blank');
